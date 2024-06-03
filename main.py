@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+
 from statsmodels.tsa.seasonal import STL
+from scipy.stats import f_oneway
 
 if __name__ == "__main__":
     # Organizando os dados por data
@@ -55,3 +57,10 @@ if __name__ == "__main__":
     plt.ylabel('Average Return')
     plt.show()
 
+    monthly_returns = [data[data['Month'] == month]['Return'].dropna() for month in range(1, 13)]
+    anova_result = f_oneway(*monthly_returns)
+    print('ANOVA result for monthly returns:', anova_result)
+
+    quarterly_returns = [data[data['Quarter'] == quarter]['Return'].dropna() for quarter in data['Quarter'].unique()]
+    anova_result = f_oneway(*quarterly_returns)
+    print('ANOVA result for quarterly returns:', anova_result)
