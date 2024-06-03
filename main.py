@@ -57,10 +57,14 @@ if __name__ == "__main__":
     plt.ylabel('Average Return')
     plt.show()
 
+    # Teste ANOVA para os retornos mensais. Esse teste aceita ou rejeita a hipótese nula:
+    # de que a média dos retornos para o mês, irrespectivo do ano, é igual para todos os
+    # meses.
     monthly_returns = [data[data['Month'] == month]['Return'].dropna() for month in range(1, 13)]
     anova_result = f_oneway(*monthly_returns)
     print('ANOVA result for monthly returns:', anova_result)
 
+    # Mesmo teste, para os retornos semestrais.
     quarterly_returns = [data[data['Quarter'] == quarter]['Return'].dropna() for quarter in data['Quarter'].unique()]
     anova_result = f_oneway(*quarterly_returns)
     print('ANOVA result for quarterly returns:', anova_result)
